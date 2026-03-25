@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ballad QUANTUM — Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="header-brand">
+      <span class="logo">⚡</span>
+      <span class="brand-name">Ballad <strong>QUANTUM</strong></span>
+      <span class="version">v5.0</span>
+    </div>
+    <div class="header-status">
+      <span class="ws-dot" id="wsDot"></span>
+      <span id="wsStatus">Conectando...</span>
+    </div>
+  </header>
+  <div id="authModal" class="modal-overlay">
+    <div class="modal">
+      <h2>🔐 Acceso</h2>
+      <input type="password" id="passwordInput" placeholder="Contraseña del dashboard"/>
+      <button onclick="authenticate()">Entrar</button>
+      <p id="authError" class="error hidden"></p>
+    </div>
+  </div>
+  <main class="main" id="mainContent" style="display:none">
+    <section class="stats-row">
+      <div class="stat-card"><div class="stat-label">Estado Bot</div><div class="stat-value" id="botStatus">—</div></div>
+      <div class="stat-card"><div class="stat-label">Exchange activo</div><div class="stat-value" id="exchangeLabel">—</div></div>
+      <div class="stat-card"><div class="stat-label">Precio actual</div><div class="stat-value" id="currentPrice">—</div></div>
+      <div class="stat-card"><div class="stat-label">Última señal</div><div class="stat-value" id="lastSignal">—</div></div>
+      <div class="stat-card"><div class="stat-label">PnL Total</div><div class="stat-value" id="totalPnl">—</div></div>
+      <div class="stat-card"><div class="stat-label">Trades (W/L)</div><div class="stat-value" id="winLoss">—</div></div>
+    </section>
+    <section class="panel">
+      <h2 class="panel-title">⚙️ Control del Bot</h2>
+      <div class="control-grid">
+        <div class="control-group"><label>Exchange</label><select id="ctrlExchange"><option value="binance">Binance Futures</option><option value="mexc">MEXC Futures</option></select></div>
+        <div class="control-group"><label>Símbolo</label><input type="text" id="ctrlSymbol" value="BTC/USDT:USDT"/></div>
+        <div class="control-group"><label>Timeframe</label><select id="ctrlTimeframe"><option value="5m">5m</option><option value="15m" selected>15m</option><option value="1h">1h</option><option value="4h">4h</option></select></div>
+        <div class="control-group"><label>Apalancamiento</label><input type="number" id="ctrlLeverage" value="10" min="1" max="20"/></div>
+        <div class="control-group"><label>Riesgo %</label><input type="number" id="ctrlRisk" value="1.0" min="0.1" max="5" step="0.1"/></div>
+      </div>
+      <div class="control-actions">
+        <button class="btn btn-green" id="btnStart" onclick="startBot()">▶ Iniciar Bot</button>
+        <button class="btn btn-red" id="btnStop" onclick="stopBot()">■ Detener Bot</button>
+        <button class="btn btn-orange" onclick="closePosition()">⚡ Cerrar Posición</button>
+      </div>
+    </section>
+    <div class="two-col">
+      <section class="panel">
+        <h2 class="panel-title">💰 Balance</h2>
+        <div id="balanceInfo"><div class="loading">Cargando...</div></div>
+        <button class="btn btn-sm" onclick="refreshBalance()">↻ Actualizar</button>
+      </section>
+      <section class="panel">
+        <h2 class="panel-title">📌 Posición Abierta</h2>
+        <div id="positionInfo"><div class="loading">Sin posición abierta</div></div>
+        <button class="btn btn-sm" onclick="refreshPositions()">↻ Actualizar</button>
+      </section>
+    </div>
+    <section class="panel">
+      <h2 class="panel-title">📋 Historial de Trades</h2>
+      <div class="table-wrap">
+        <table class="trades-table">
+          <thead><tr><th>Fecha</th><th>Exchange</th><th>Símbolo</th><th>Lado</th><th>Precio</th><th>Contratos</th><th>SL</th><th>TP</th><th>PnL</th><th>Señal</th></tr></thead>
+          <tbody id="tradesBody"><tr><td colspan="10" class="empty">No hay trades registrados</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel">
+      <h2 class="panel-title">🖥️ Log en vivo</h2>
+      <div class="log-box" id="logBox"></div>
+    </section>
+  </main>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>
