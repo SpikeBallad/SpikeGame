@@ -1,0 +1,3 @@
+git clone https://github.com/SpikeBallad/SpikeGame.git /tmp/spikegame-push
+cd /tmp/spikegame-push
+git push origin 1c31d18..HEAD:claude/crypto-trading-bot-M7pDZ
